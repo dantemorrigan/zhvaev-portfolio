@@ -1,144 +1,326 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>👋 Никита Жваев</title>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600&display=swap" rel="stylesheet">
-  <style>
-    :root {
-      --orange-light: #fff7f0;
-      --orange: #fca652;
-      --text-color: #111;
-      --card-radius: 12px;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>👋 Никита Жваев</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --orange-light: #fff9f3;
+    --orange: #fca652;
+    --orange-dark: #d55b00;
+    --text-color: #222;
+    --bg-color: var(--orange-light);
+    --card-radius: 16px;
+    --transition-speed: 0.35s;
+  }
+
+  /* Темная тема */
+  [data-theme="dark"] {
+    --orange-light: #1f1f1f;
+    --orange: #fca652;
+    --orange-dark: #f5a623;
+    --text-color: #eee;
+    --bg-color: #121212;
+  }
+
+  /* Reset и базовые стили */
+  * {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    padding: 2rem;
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.7;
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    overflow-x: hidden;
+    opacity: 0; /* будет показан после загрузки */
+    transition: background-color 0.5s, color 0.5s;
+  }
+
+  /* Анимация аватара при загрузке */
+  img.avatar {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 4px solid var(--orange);
+    box-shadow:
+      0 0 8px rgba(252, 166, 82, 0.6),
+      0 4px 15px rgba(252, 166, 82, 0.3);
+    display: block;
+    margin: 0 auto 1.5rem;
+  }
+
+  h1, h2, h3 {
+    text-align: center;
+    transition: color var(--transition-speed);
+    cursor: default;
+    user-select: none;
+  }
+
+  h1:hover, h2:hover {
+    color: var(--orange-dark);
+  }
+
+  h1 {
+    font-size: 2.4rem;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+  }
+
+  h2 {
+    color: var(--orange-dark);
+    margin-top: 0;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+  }
+
+  h3 {
+    font-weight: 600;
+    font-size: 1.3rem;
+    margin-bottom: 0.6rem;
+    color: #888;
+  }
+
+  p.center {
+    text-align: center;
+    font-style: italic;
+    font-weight: 400;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #555;
+    user-select: none;
+  }
+
+  a {
+    color: var(--orange-dark);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color var(--transition-speed);
+  }
+
+  a:hover {
+    color: var(--orange);
+    text-decoration: underline;
+  }
+
+  hr {
+    margin: 2.5rem 0;
+    border: none;
+    border-top: 2px solid #f5c6a5;
+    opacity: 0.7;
+  }
+
+  ul {
+    padding-left: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+
+  li {
+    margin-bottom: 0.6rem;
+    line-height: 1.5;
+    font-weight: 400;
+  }
+
+  /* Секции */
+  .section {
+    background-color: #fff;
+    border-radius: var(--card-radius);
+    padding: 1.8rem 2rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 6px 20px rgba(252, 166, 82, 0.12);
+    opacity: 0;
+    transform: translateY(25px);
+    transition: opacity 0.6s ease, transform 0.6s ease;
+  }
+
+  [data-theme="dark"] .section {
+    background-color: #222;
+    box-shadow: 0 6px 20px rgba(252, 166, 82, 0.25);
+  }
+
+  .section.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Прогресс-бары */
+  .skill-block {
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: #333;
+    user-select: none;
+  }
+
+  [data-theme="dark"] .skill-label {
+    color: #eee;
+  }
+
+  .progress-bar {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .progress-cell {
+    width: 24px;
+    height: 24px;
+    border-radius: 6px;
+    background-color: #eee;
+    box-shadow: inset 0 0 6px #ddd;
+    opacity: 0.4;
+  }
+
+  [data-theme="dark"] .progress-cell {
+    background-color: #444;
+    box-shadow: inset 0 0 6px #666;
+  }
+
+  .progress-cell.filled {
+    background-color: var(--orange);
+    box-shadow:
+      0 0 8px var(--orange),
+      inset 0 0 5px #f7b94a;
+    opacity: 1;
+  }
+
+  /* Сертификаты — без анимаций */
+  img.cert {
+    display: block;
+    width: 100%;
+    max-width: 800px;
+    margin: 2rem auto 2rem;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(252, 166, 82, 0.15);
+    cursor: zoom-in;
+    transition: transform 0.3s ease;
+  }
+  img.cert:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 25px rgba(252, 166, 82, 0.35);
+  }
+
+  /* Адаптив */
+  @media (max-width: 600px) {
     body {
-      margin: 0;
-      padding: 2rem;
-      font-family: 'Montserrat', sans-serif;
-      background-color: var(--orange-light);
-      color: var(--text-color);
-      line-height: 1.7;
-      max-width: 900px;
-      margin-left: auto;
-      margin-right: auto;
+      padding: 1rem;
     }
 
     img.avatar {
-      width: 140px;
-      height: 140px;
-      border-radius: 50%;
-      object-fit: cover;
-      border: 3px solid #fca652;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      display: block;
-      margin: 0 auto 1.5rem;
-    }
-
-    h1, h2, h3 {
-      text-align: center;
+      width: 100px;
+      height: 100px;
     }
 
     h1 {
-      font-size: 2rem;
-      margin-bottom: 0.5rem;
+      font-size: 1.8rem;
     }
 
-    p.center {
-      text-align: center;
-      font-style: italic;
+    h2 {
+      font-size: 1.5rem;
     }
 
-    a {
-      color: #d55b00;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
-    }
-
-    hr {
-      margin: 2rem 0;
-      border: none;
-      border-top: 1px solid #f5c6a5;
-    }
-
-    ul {
-      padding-left: 1.5rem;
-    }
-
-    img.cert {
-      display: block;
-      width: 100%;
-      max-width: 800px;
-      margin: 1.5rem auto;
-      border-radius: 8px;
-      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+    h3 {
+      font-size: 1.1rem;
     }
 
     .section {
-      background-color: #fff;
-      border-radius: var(--card-radius);
-      padding: 1.5rem;
-      margin-bottom: 2rem;
-      box-shadow: 0 4px 12px rgba(252, 166, 82, 0.1);
-    }
-
-    .section h2 {
-      color: #d55b00;
-      margin-top: 0;
-    }
-
-    .skill-block {
-      margin-bottom: 1.2rem;
-    }
-
-    .skill-label {
-      font-weight: 600;
-      margin-bottom: 0.3rem;
-    }
-
-    .progress-bar {
-      display: flex;
-      gap: 0.3rem;
+      padding: 1.2rem 1.5rem;
     }
 
     .progress-cell {
-      width: 20px;
-      height: 20px;
-      border-radius: 4px;
-      background-color: #eee;
+      width: 18px;
+      height: 18px;
     }
+  }
 
-    .progress-cell.filled {
-      background-color: #fca652;
-    }
+  /* Заставка загрузки */
+  #loading-screen {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: var(--bg-color);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+    flex-direction: column;
+  }
 
-    @media (max-width: 600px) {
-      body {
-        padding: 1rem;
-      }
+  /* Анимация точек загрузки */
+  .loading-dots span {
+    display: inline-block;
+    width: 14px;
+    height: 14px;
+    margin: 0 6px;
+    background-color: var(--orange);
+    border-radius: 50%;
+    opacity: 0.4;
+    animation: blink 1.4s infinite;
+  }
 
-      img.avatar {
-        width: 100px;
-        height: 100px;
-      }
+  .loading-dots span:nth-child(1) { animation-delay: 0s; }
+  .loading-dots span:nth-child(2) { animation-delay: 0.2s; }
+  .loading-dots span:nth-child(3) { animation-delay: 0.4s; }
 
-      h1 {
-        font-size: 1.6rem;
-      }
+  @keyframes blink {
+    0%, 80%, 100% { opacity: 0.4; }
+    40% { opacity: 1; }
+  }
 
-      .section {
-        padding: 1rem;
-      }
-    }
-  </style>
+  /* Темная тема переключатель кнопка */
+  #theme-toggle {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--orange);
+    border: none;
+    border-radius: 30px;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(252, 166, 82, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 0.3s ease;
+    z-index: 10000;
+  }
+  #theme-toggle:hover {
+    background: var(--orange-dark);
+  }
+  #theme-toggle svg {
+    fill: white;
+    width: 24px;
+    height: 24px;
+  }
+</style>
 </head>
-
 <body>
 
+<!-- Заставка загрузки -->
+<div id="loading-screen" aria-label="Loading screen" role="alert" aria-busy="true">
+  <img class="avatar" src="https://avatars.githubusercontent.com/u/51741188?v=4" alt="Avatar" style="width:120px; height:120px; border-color: var(--orange);" />
+  <div class="loading-dots" style="margin-top: 20px;">
+    <span></span><span></span><span></span>
+  </div>
+</div>
+
+<!-- Основной контент -->
+<div id="main-content" style="opacity:0; transition: opacity 1s ease;">
   <img class="avatar" src="https://avatars.githubusercontent.com/u/51741188?v=4" alt="Avatar" />
 
   <h1>👋 Привет, я Никита</h1>
@@ -150,8 +332,8 @@
       <li>🧩 Выпускник школы QA Studio (Junior)</li>
       <li>🎮 Выпускник курса "Геймдизайн" от GeekBrains</li>
       <li>⚖️ Выпускник РГУП, г. Москва — юриспруденция, специалист для судебной системы</li>
-      <li>✍️ Автор книг, рассказов и статей на <a href="https://dtf.ru/id269504">DTF</a> и <a href="https://dzen.ru/toss">Дзен</a></li>
-      <li>🎸 Играю на электрогитаре и сочиняю <a href="https://vk.com/music/playlist/651786960_11_48e611ceeae2033fe8">музыку</a></li>
+      <li>✍️ Автор книг, рассказов и статей на <a href="https://dtf.ru/id269504" target="_blank" rel="noopener">DTF</a> и <a href="https://dzen.ru/toss" target="_blank" rel="noopener">Дзен</a></li>
+      <li>🎸 Играю на электрогитаре и сочиняю музыку <a href="https://vk.com/music/playlist/651786960_11_48e611ceeae2033fe8" target="_blank" rel="noopener">музыку</a></li>
       <li>🌍 Мечтаю переехать</li>
     </ul>
   </div>
@@ -161,22 +343,22 @@
 
     <h3>🎮 Игровая индустрия</h3>
     <ul>
-      <li><b>🧵 Founder & Game Lead — <a href="https://logman12.itch.io/">TOSS STUDIO</a></b><br>
-        Зарелизил <a href="https://logman12.itch.io/the-leather-city">The Leather City</a> — концепт, левел-дизайн, нарратив, код, маркетинг, паблишинг</li>
-      <li><b>🎮 Lead Game Designer — <a href="https://vk.com/department34">Callisto Games</a></b><br>
+      <li><b>🧵 Founder & Game Lead — <a href="https://logman12.itch.io/" target="_blank" rel="noopener">TOSS STUDIO</a></b><br>
+        Зарелизил <a href="https://logman12.itch.io/the-leather-city" target="_blank" rel="noopener">The Leather City</a> — концепт, левел-дизайн, нарратив, код, маркетинг, паблишинг</li>
+      <li><b>🎮 Lead Game Designer — <a href="https://vk.com/department34" target="_blank" rel="noopener">Callisto Games</a></b><br>
         GDD, нарратив, взаимодействие с командой</li>
     </ul>
 
     <h3>🛠 GitHub-проекты</h3>
     <ul>
-      <li><a href="https://github.com/dantemorrigan/48-91KINO_bot">48-91KINO_bot</a> — телеграм-бот для стриминга авторского кино</li>
-      <li><a href="https://github.com/dantemorrigan/Cotes">Cotes</a> — минималистичное приложение для заметок</li>
-      <li><a href="https://github.com/dantemorrigan/lovepulse">LovePulse</a> — приложение для отслеживания романтических связей</li>
+      <li><a href="https://github.com/dantemorrigan/48-91KINO_bot" target="_blank" rel="noopener">48-91KINO_bot</a> — телеграм-бот для стриминга авторского кино</li>
+      <li><a href="https://github.com/dantemorrigan/Cotes" target="_blank" rel="noopener">Cotes</a> — минималистичное приложение для заметок</li>
+      <li><a href="https://github.com/dantemorrigan/lovepulse" target="_blank" rel="noopener">LovePulse</a> — приложение для отслеживания романтических связей</li>
     </ul>
 
     <h3>🖋 Медиа и креатив</h3>
     <ul>
-      <li><b>📡 Editor-in-Chief — <a href="https://t.me/tommorow4891">tommorow4891</a></b></li>
+      <li><b>📡 Editor-in-Chief — <a href="https://t.me/tommorow4891" target="_blank" rel="noopener">tommorow4891</a></b></li>
       <li>🎨 Visual Designer / Freelance — брендинг, лого, презентации</li>
     </ul>
   </div>
@@ -186,7 +368,7 @@
     <ul>
       <li><b>📘 РГУП, бакалавриат (2021–2025)</b> — юриспруденция, судебная система</li>
       <li><b>🎓 GeekBrains, курс "Геймдизайн" (2021–2023)</b> — UE4/5, сценаристика, экономика, геймджемы</li>
-      <li><b>🧪 QA Studio, курс "Инженер по тестированию" (2025)</b> — Изучена база тестирования. Получен опыт на реальном проекте</li>
+      <li><b>🧪 QA Studio, курс "Инженер по тестированию" (2025)</b> — изучена база тестирования. Получен опыт на реальном проекте</li>
     </ul>
   </div>
 
@@ -286,22 +468,98 @@
 
   <div class="section">
     <h2>📎 Дипломы и сертификаты</h2>
-<img class="cert" src="./images/bakalavr.png" alt="Диплом бакалавра" />
-<img class="cert" src="./images/diplom_gb.png" alt="Диплом GeekBrains о профессиональной переподготовке" />
-<img class="cert" src="./images/ru_cert.png" alt="Сертификат QA (на русском)" />
-<img class="cert" src="./images/eng_cert.png" alt="Сертификат QA (на английском)" />
-<img class="cert" src="./images/diplom.png" alt="Сертификат GeekBrains" />
-<img class="cert" src="./images/design.png" alt="Сертификат GeekBrains по дизайну" />
-
+    <img class="cert" src="./images/bakalavr.png" alt="Диплом бакалавра" />
+    <img class="cert" src="./images/diplom_gb.png" alt="Диплом GeekBrains о профессиональной переподготовке" />
+    <img class="cert" src="./images/ru_cert.png" alt="Сертификат QA (на русском)" />
+    <img class="cert" src="./images/eng_cert.png" alt="Сертификат QA (на английском)" />
+    <img class="cert" src="./images/diplom.png" alt="Сертификат GeekBrains" />
+    <img class="cert" src="./images/design.png" alt="Сертификат GeekBrains по дизайну" />
   </div>
 
   <div class="section">
     <h2>📫 Контакты</h2>
     <ul>
-      <li>💬 Telegram: <a href="https://t.me/dante_morr1209">@dante_morr</a></li>
+      <li>💬 Telegram: <a href="https://t.me/dante_morr1209" target="_blank" rel="noopener">@dante_morr</a></li>
       <li>📧 Email: <a href="mailto:nikitazhvaev@gmail.com">nikitazhvaev@gmail.com</a></li>
     </ul>
   </div>
+</div>
+
+<!-- Кнопка переключения темы -->
+<button id="theme-toggle" aria-label="Переключить тему">
+  <svg viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M12 3a9 9 0 0 0 0 18 9 9 0 0 0 0-18zm0 16a7 7 0 0 1 0-14 7 7 0 0 1 0 14z"/>
+  </svg>
+</button>
+
+<script>
+  // После полной загрузки — скрываем загрузочный экран, показываем контент с анимацией
+  window.addEventListener('load', () => {
+    const loadingScreen = document.getElementById('loading-screen');
+    const mainContent = document.getElementById('main-content');
+
+    setTimeout(() => {
+      loadingScreen.style.opacity = '0';
+      loadingScreen.style.pointerEvents = 'none';
+      mainContent.style.opacity = '1';
+      document.body.style.opacity = '1';
+      setTimeout(() => {
+        loadingScreen.remove();
+      }, 600);
+    }, 1500);
+  });
+
+  // Плавное появление секций при прокрутке
+  const sections = document.querySelectorAll('.section');
+
+  function revealOnScroll() {
+    const triggerBottom = window.innerHeight * 0.85;
+
+    sections.forEach(section => {
+      const sectionTop = section.getBoundingClientRect().top;
+
+      if(sectionTop < triggerBottom) {
+        section.classList.add('visible');
+      }
+    });
+  }
+
+  window.addEventListener('scroll', revealOnScroll);
+  window.addEventListener('load', revealOnScroll);
+
+  // Темная тема переключение
+  const themeToggleBtn = document.getElementById('theme-toggle');
+  const userPrefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const savedTheme = localStorage.getItem('theme');
+
+  function setTheme(theme) {
+    if(theme === 'dark') {
+      document.documentElement.setAttribute('data-theme', 'dark');
+      localStorage.setItem('theme', 'dark');
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+      localStorage.setItem('theme', 'light');
+    }
+  }
+
+  // Инициализация темы
+  if(savedTheme) {
+    setTheme(savedTheme);
+  } else if(userPrefersDark) {
+    setTheme('dark');
+  } else {
+    setTheme('light');
+  }
+
+  themeToggleBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    if(currentTheme === 'dark') {
+      setTheme('light');
+    } else {
+      setTheme('dark');
+    }
+  });
+</script>
 
 </body>
 </html>
