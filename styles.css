@@ -661,16 +661,15 @@ img { display: block; max-width: 100%; }
 
 /* ---------- Certificates ---------- */
 .cert-gallery {
-  columns: 3;
-  column-gap: 1rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
 }
-@media (max-width: 900px) { .cert-gallery { columns: 2; } }
-@media (max-width: 560px) { .cert-gallery { columns: 1; } }
+@media (max-width: 900px) { .cert-gallery { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cert-gallery { grid-template-columns: 1fr; } }
 .cert {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-  break-inside: avoid;
+  display: flex;
+  flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius);
   overflow: hidden;
@@ -681,8 +680,11 @@ img { display: block; max-width: 100%; }
 .cert:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.10); }
 .cert img {
   width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover;
+  object-position: top;
   display: block;
+  flex-shrink: 0;
 }
 .cert figcaption {
   display: flex;
