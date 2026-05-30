@@ -460,7 +460,7 @@ img { display: block; max-width: 100%; }
 .fact-list { display: grid; gap: 0; }
 .fact {
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: 4.5rem 1fr;
   gap: 1rem;
   align-items: baseline;
   padding: 1rem 0;
