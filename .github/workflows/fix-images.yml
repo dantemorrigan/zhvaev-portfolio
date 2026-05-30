@@ -1,0 +1,51 @@
+name: Fix binary images
+on:
+  workflow_dispatch:
+  push:
+    paths: ['.github/workflows/fix-images.yml']
+
+permissions:
+  contents: write
+
+jobs:
+  fix:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode base64 images
+        run: |
+          python3 << 'EOF'
+          import base64, os
+          files = [
+            'assets/avatar.jpg',
+            'assets/cert-bakalavr.jpg',
+            'assets/cert-design.jpg',
+            'assets/cert-diplom.jpg',
+            'assets/cert-qa-en.jpg',
+            'assets/cert-qa-ru.jpg',
+          ]
+          for fname in files:
+              if not os.path.exists(fname):
+                  print(f'Skip (not found): {fname}')
+                  continue
+              with open(fname, 'rb') as f:
+                  content = f.read()
+              # Check if it looks like a JPEG already
+              if content[:3] == b'\xff\xd8\xff':
+                  print(f'Already binary: {fname}')
+                  continue
+              try:
+                  binary = base64.b64decode(content.strip())
+                  with open(fname, 'wb') as f:
+                      f.write(binary)
+                  print(f'Fixed: {fname} ({len(binary)} bytes)')
+              except Exception as e:
+                  print(f'Error {fname}: {e}')
+          EOF
+      - name: Commit fixed images
+        run: |
+          git config user.email "action@github.com"
+          git config user.name "GitHub Action"
+          git add assets/
+          git diff --staged --quiet || git commit -m "Fix: decode base64 images to binary"
+          git push
