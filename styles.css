@@ -701,13 +701,21 @@ img { display: block; max-width: 100%; }
   transition: border-color 0.3s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 .cert:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.10); }
+.cert-img-wrap {
+  width: 100%;
+  height: 280px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: color-mix(in srgb, var(--surface) 70%, var(--line));
+  overflow: hidden;
+}
 .cert img {
   width: 100%;
-  aspect-ratio: 3 / 4;
+  height: 100%;
   object-fit: contain;
   object-position: center;
   display: block;
-  background: color-mix(in srgb, var(--surface) 60%, var(--line));
 }
 .cert figcaption {
   display: flex;
