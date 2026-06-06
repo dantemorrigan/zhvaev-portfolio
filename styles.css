@@ -703,8 +703,11 @@ img { display: block; max-width: 100%; }
 .cert:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.10); }
 .cert img {
   width: 100%;
-  height: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: contain;
+  object-position: center;
   display: block;
+  background: color-mix(in srgb, var(--surface) 60%, var(--line));
 }
 .cert figcaption {
   display: flex;
