@@ -697,6 +697,7 @@ img { display: block; max-width: 100%; }
   overflow: hidden;
   background: var(--surface);
   position: relative;
+  will-change: transform;
   transition: border-color 0.3s var(--ease), transform 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
 .cert:hover { border-color: var(--accent); transform: translateY(-4px); box-shadow: 0 14px 40px rgba(0,0,0,0.10); }
