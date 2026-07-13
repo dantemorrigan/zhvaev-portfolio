@@ -20,7 +20,17 @@
   if (saved) applyTheme(saved);
   else if (window.matchMedia("(prefers-color-scheme: dark)").matches) applyTheme("dark");
   toggle && toggle.addEventListener("click", function () {
-    applyTheme(root.getAttribute("data-theme") === "dark" ? "light" : "dark");
+    const next = root.getAttribute("data-theme") === "dark" ? "light" : "dark";
+    const switchTheme = function () {
+      root.classList.add("theme-switching");
+      applyTheme(next);
+      window.setTimeout(() => root.classList.remove("theme-switching"), 700);
+    };
+    if (!prefersReduced && document.startViewTransition) {
+      document.startViewTransition(switchTheme);
+    } else {
+      switchTheme();
+    }
   });
 
   /* ---------- Custom cursor ---------- */
@@ -217,5 +227,49 @@
   lbClose && lbClose.addEventListener("click", closeLb);
   lb && lb.addEventListener("click", function (e) { if (e.target === lb) closeLb(); });
   document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeLb(); });
+
+  /* ---------- Dossier micro-interactions ---------- */
+  if (finePointer && !prefersReduced) {
+    const cursorRing = document.getElementById("cursorRing");
+    const labelled = document.querySelectorAll(".proj, .cert, .c-link, .theme-toggle");
+    labelled.forEach(function (el) {
+      const label = el.classList.contains("proj") ? "OPEN" :
+        el.classList.contains("cert") ? "VIEW" :
+        el.classList.contains("theme-toggle") ? "MODE" : "GO";
+      el.addEventListener("mouseenter", function () { cursorRing.dataset.label = label; });
+      el.addEventListener("mouseleave", function () { delete cursorRing.dataset.label; });
+    });
+
+    document.querySelectorAll(".proj, .cert").forEach(function (card) {
+      card.addEventListener("pointermove", function (e) {
+        const r = card.getBoundingClientRect();
+        card.style.setProperty("--mx", ((e.clientX - r.left) / r.width * 100) + "%");
+        card.style.setProperty("--my", ((e.clientY - r.top) / r.height * 100) + "%");
+      });
+    });
+
+    document.querySelectorAll(".theme-toggle, .proj-arrow").forEach(function (el) {
+      el.addEventListener("pointermove", function (e) {
+        const r = el.getBoundingClientRect();
+        el.style.transform = `translate(${(e.clientX - r.left - r.width / 2) * .22}px, ${(e.clientY - r.top - r.height / 2) * .22}px)`;
+      });
+      el.addEventListener("pointerleave", function () { el.style.transform = ""; });
+    });
+  }
+
+  /* ---------- Section index pulse ---------- */
+  const indexedSections = Array.from(document.querySelectorAll(".section, .contact"));
+  if ("IntersectionObserver" in window && !prefersReduced) {
+    const sectionObserver = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        entry.target.classList.toggle("is-current", entry.isIntersecting);
+      });
+    }, { threshold: .28 });
+    indexedSections.forEach((section) => sectionObserver.observe(section));
+  }
+
+  document.querySelectorAll(".tag").forEach(function (tag, index) {
+    tag.style.setProperty("--i", String(index % 12));
+  });
 
 })();
