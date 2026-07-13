@@ -198,7 +198,7 @@ body {
   width: min(25vw, 340px);
   aspect-ratio: 3 / 4;
   margin-bottom: 2rem;
-  filter: saturate(.35) contrast(1.08);
+  filter: none;
 }
 
 .avatar-wrap::before,
@@ -233,7 +233,10 @@ body {
   clip-path: polygon(0 0, 87% 0, 100% 10%, 100% 100%, 0 100%);
 }
 
-.avatar img { object-position: 50% 30%; }
+.avatar img {
+  object-position: 50% 30%;
+  filter: saturate(1.08) brightness(1.08) contrast(1.02);
+}
 .avatar-ring { inset: -10px; border-radius: 0; animation: none; }
 .avatar-ring::before { top: auto; left: auto; right: -4px; bottom: 18%; border-radius: 0; }
 
@@ -365,17 +368,13 @@ body {
 .edu .body .place { font-size: clamp(1.5rem, 2.8vw, 3rem); letter-spacing: -.045em; }
 
 .cert-gallery {
-  grid-template-columns: repeat(12, 1fr);
-  gap: 18px;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(28px, 3vw, 46px);
   align-items: start;
 }
 
 .cert { border-color: var(--line-2); }
-.cert:nth-child(1) { grid-column: span 5; }
-.cert:nth-child(2) { grid-column: span 3; margin-top: 5rem; }
-.cert:nth-child(3) { grid-column: span 4; }
-.cert:nth-child(4) { grid-column: 2 / span 4; }
-.cert:nth-child(5) { grid-column: 7 / span 5; margin-top: -2rem; }
+.cert:nth-child(n) { grid-column: auto; margin-top: 0; }
 .cert figcaption { background: var(--surface); }
 .cert .c-zoom { border-radius: 0; }
 
@@ -421,6 +420,7 @@ body {
   .proj:first-child { grid-column: span 2; }
   .soft-grid { grid-template-columns: repeat(2, 1fr); }
   .soft { border-bottom: 1px solid var(--line); }
+  .cert-gallery { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
 @media (max-width: 700px) {
