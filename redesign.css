@@ -300,10 +300,13 @@ body {
 .fact {
   grid-template-columns: 5.5rem 1fr;
   padding: 1.25rem 0;
-  transition: background .25s var(--ease), padding .25s var(--ease);
+  transition: background .25s var(--ease), box-shadow .25s var(--ease);
 }
 
-.fact:hover { padding-inline: .8rem; background: var(--accent-soft); }
+.fact:hover {
+  background: var(--accent-soft);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
 .fact .k { color: var(--accent); }
 
 .exp-group { display: grid; grid-template-columns: 1fr 4fr; gap: 1rem; }
