@@ -299,7 +299,7 @@ body {
 
 .fact {
   grid-template-columns: 5.5rem 1fr;
-  padding: 1.25rem 0;
+  padding: 1.25rem .9rem;
   transition: background .25s var(--ease), box-shadow .25s var(--ease);
 }
 
