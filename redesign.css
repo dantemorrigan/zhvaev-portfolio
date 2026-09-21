@@ -290,6 +290,13 @@ body {
   box-shadow: inset 0 -.16em 0 var(--accent-soft);
 }
 
+.ai-lead {
+  max-width: 34ch;
+  font-size: clamp(1.45rem, 2.6vw, 2.7rem);
+  line-height: 1.08;
+  letter-spacing: -.04em;
+}
+
 .fact {
   grid-template-columns: 5.5rem 1fr;
   padding: 1.25rem 0;
