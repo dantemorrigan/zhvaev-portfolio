@@ -462,8 +462,25 @@ body {
   .hero-sub, .hero-roles { padding-left: 1rem; }
   .scroll-cue { display: none; }
   .section { padding-block: 80px; }
-  .sec-head { grid-template-columns: 58px 1fr; }
-  .sec-title { font-size: clamp(2.4rem, 13vw, 4rem); }
+  .sec-head {
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 12px;
+    align-items: end;
+  }
+  .sec-title {
+    min-width: 0;
+    font-size: clamp(2.15rem, 10vw, 3.35rem);
+    line-height: .92;
+    letter-spacing: -.05em;
+    overflow-wrap: normal;
+  }
+  .education-title {
+    font-size: clamp(2.05rem, 9.6vw, 3.2rem);
+  }
+  .certificates-title {
+    font-size: clamp(1.95rem, 8.6vw, 2.9rem);
+    line-height: .96;
+  }
   .about-grid, .skills-grid { grid-template-columns: 1fr; }
   .lead { font-size: clamp(1.9rem, 9vw, 3rem); }
   .exp-group { grid-template-columns: 1fr; }
@@ -478,7 +495,12 @@ body {
   .cert-gallery { grid-template-columns: 1fr; }
   .cert:nth-child(n) { grid-column: auto; margin-top: 0; }
   .cert { grid-template-rows: 320px auto; }
-  .contact-head { font-size: clamp(4rem, 21vw, 8rem); }
+  .contact-head {
+    font-size: clamp(3.5rem, 15.5vw, 5.4rem);
+    line-height: .78;
+    letter-spacing: -.065em;
+    max-width: 100%;
+  }
 }
 
 /* ---------- Motion system ---------- */
